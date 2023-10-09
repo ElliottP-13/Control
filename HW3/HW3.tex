@@ -1,0 +1,675 @@
+\documentclass[11pt]{article}
+\usepackage{../EllioStyle}
+\usepackage{listings}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\graphicspath{ {imgs/} }
+
+\title{Homework 3}
+\author{Elliott Pryor}
+\date{29 September 2023}
+
+\rhead{Homework 3}
+\lhead{Elliott Pryor}
+
+\begin{document}
+\maketitle
+
+\problem{1}
+Show that by definition that the following vectors are linearly independent:
+$$
+x_1 = \begin{pmatrix}
+    1\\0\\0
+\end{pmatrix}, \, x_2 = \begin{pmatrix}
+    1\\1\\0
+\end{pmatrix}, \, x_3 = \begin{pmatrix}
+    1\\1\\1
+\end{pmatrix}
+$$
+
+\soln
+
+Suppose not, suppose they are linearly dependent.
+Then $\exists \alpha_1, \alpha_2, \alpha_3$ such that $\alpha_1 x_1 + \alpha_2 x_2 + \alpha_3 x_3 = 0$.
+This becomes the set of equations 
+
+\begin{align}
+    \alpha_1 + \alpha_2 + \alpha_3 &= 0\\
+    \alpha_2 + \alpha_3 &= 0\\
+    \alpha_3 &= 0\\
+\end{align}
+
+Clearly $\alpha_3 = 0$, then we substitute into (2) to find $\alpha_2 = 0$, 
+and then $\alpha_1$ must also equal 0.
+This is a contradiction, thus they must be independent.
+
+\problem{2}
+
+Show that by definition that the following vectors are linearly dependent:
+$$
+x_1 = \begin{pmatrix}
+    1\\2\\3
+\end{pmatrix}, \, x_2 = \begin{pmatrix}
+    -1\\0\\2
+\end{pmatrix}, \, x_3 = \begin{pmatrix}
+    0\\2\\5
+\end{pmatrix}
+$$
+
+\soln
+
+By definition:
+$\exists \alpha_1, \alpha_2, \alpha_3$ such that $\alpha_1 x_1 + \alpha_2 x_2 + \alpha_3 x_3 = 0$.
+This becomes the set of equations 
+
+\begin{align}
+    \alpha_1 - \alpha_2 &= 0 \label{eq:5}\\
+    \alpha_1 + \alpha_3 &= 0\\
+    3\alpha_1 + 2\alpha_2 + 5\alpha_3 &= 0 \label{eq:7}
+\end{align}
+
+Let $\alpha_1 = \alpha_2 = 1$ and $\alpha_3 = -1$.
+This satisfies equations \ref{eq:5}-\ref{eq:7}, and the $\alpha_i$ are not all zero, so they are linearly dependent by definition.
+
+
+\problem{3}
+Determine the rank, nullity, and null space of 
+$$
+A = \begin{bmatrix}
+    0 & 1 & 1 & 2 \\
+    1 & 2 & 3 & 4 \\
+    2 & 0 & 2 & 0
+\end{bmatrix}
+$$
+
+\soln
+
+This has rank 2, we can see that $c_3 = c_1 + c_2$ and $c_4 = 2*c_2$, so there are only 2 independent columns.
+Thus the nullity is also 2 (since 4 - 2 is 2).
+
+Row reduction of $A$ results in 
+$$
+A' = \begin{bmatrix}
+    1 & 0 & 1 & 0 \\
+    0 & 1 & 1 & 2 \\
+    0 & 0 & 0 & 0
+\end{bmatrix}
+$$
+
+So, we have $x_1 + x_3 = 0$ and $x_2 + x_3 + 2x_4 = 0$. 
+We get $x_3 \begin{pmatrix}
+    -1 \\ 0 \\ 1 \\ -1/2
+\end{pmatrix}$ and $x_2 \begin{pmatrix}
+    0 \\ 1 \\ 0 \\ -1/2
+\end{pmatrix}$
+
+\problem{4}
+Find all solutions to the following equation
+$$
+\begin{bmatrix}
+    0 & 1 & 1 & 2\\
+    1 & 2 & 3 & 4\\
+    2 & 0 & 2 & 0\\
+\end{bmatrix} x = \begin{pmatrix}
+    -4 \\ -8 \\ 0
+\end{pmatrix}
+$$
+
+\soln
+
+So we know from the previous problem what the null space is.
+This is helpful, we just need to find a nominal solution, then we can add the null vectors to get all of them.
+
+By inspection, this is $-4 c_2$, so $x_0 = \begin{pmatrix}
+    0 \\-4 \\ 0 \\ 0
+\end{pmatrix}$,
+then we add the null vectors to get a general solution of the form:
+
+$$
+\begin{pmatrix}
+    0 \\-4 \\ 0 \\ 0
+\end{pmatrix} + \alpha_1 \begin{pmatrix}
+    -1 \\ 0 \\ 1 \\ -1/2
+\end{pmatrix} + \alpha_2 \begin{pmatrix}
+    0 \\ 1 \\ 0 \\ -1/2
+\end{pmatrix} \, \forall \alpha_1,\alpha_2 \in \reals
+$$
+
+\problem{5}
+
+Compute the determinate of the following matrices:
+$$
+A_1 = \begin{bmatrix}
+    1 & 2 & 3 & 4\\
+    -1 & 1 & 2 & 3\\
+    1 & 1 & 1 & 2\\
+    -1 & -1 & 1 & 1
+\end{bmatrix}, \;
+A_2 = \begin{bmatrix}
+    1 & 0 & 1 \\
+    0 & 1 & 2 \\
+    0 & 4 & 3
+\end{bmatrix}
+$$
+
+\soln
+
+Why do we need to do so much busywork linear algebra homework. 
+I appreciate the review is good for some, but this feels like wasting my time.
+This is not Math 101. I will step through $A_2$ and give you the matlab code for $A_1$.
+
+Going down the first column we get:
+\begin{align*}
+    |A_2| &= \begin{vmatrix}
+        1 & 0 & 1 \\
+    0 & 1 & 2 \\
+    0 & 4 & 3
+    \end{vmatrix} \\
+    &= 1 \begin{vmatrix}
+    1 & 2 \\
+    4 & 3
+    \end{vmatrix}
+    + 0 \begin{vmatrix}
+        0 & 1 \\
+        4 & 3
+    \end{vmatrix} + 0 \begin{vmatrix}
+         0 & 1 \\
+    1 & 2 \\
+    \end{vmatrix} \\
+    &= 1 ((1*3) - (2 * 4)) \\
+    &= -5
+\end{align*}
+
+\begin{align*}
+    |A_2| &= \begin{vmatrix}
+        1 & 2 & 3 & 4\\
+    -1 & 1 & 2 & 3\\
+    1 & 1 & 1 & 2\\
+    -1 & -1 & 1 & 1
+    \end{vmatrix} \\
+    &= 1 (1) \begin{vmatrix}
+        1 & 2 & 3\\
+        1 & 1 & 2\\
+        -1 & 1 & 1
+    \end{vmatrix} + -1 (-1) \begin{vmatrix}
+        2 & 3 & 4\\
+        1 & 1 & 2\\
+        -1 & 1 & 1
+    \end{vmatrix}
+    + 1 (1) \begin{vmatrix}
+        2 & 3 & 4\\
+        1 & 2 & 3\\
+        -1 & 1 & 1
+    \end{vmatrix}
+    + -1 (-1) \begin{vmatrix}
+        2 & 3 & 4\\
+        1 & 2 & 3\\
+        1 & 1 & 2\\
+    \end{vmatrix} \\
+    &= -1 -3 -2 +1 \\
+    &= -5
+\end{align*}
+
+
+\problem{6}
+
+Find the inverse of the following matrices:
+
+$$
+A_1 = \begin{bmatrix}
+    2 & 1 \\ 1 & -2
+\end{bmatrix}, \; A_2 = \begin{bmatrix}
+    1 & 3 & 4 \\ 3 & -1 & 6 \\ -1 & 5 & 1
+\end{bmatrix}
+$$
+
+\soln
+
+We use the little trick for inverse of 2x2.
+$A_1^{-1} = \frac{1}{-5} \begin{bmatrix}
+    -2 & -1 \\ -1 & 2
+\end{bmatrix}$.
+
+Then use the augmented matrix and row reduce for $A_2$.
+\begin{align*}
+    &\begin{bmatrix}
+        1 & 3 & 4 & 1 & 0 & 0 \\ 3 & -1 & 6 & 0 & 1 & 0\\ -1 & 5 & 1 & 0 & 0 & 1
+    \end{bmatrix} \\
+    &\begin{bmatrix}
+        1 & 3 & 4 & 1 & 0 & 0 \\ 0 & -10 & -6 & -3 & 1 & 0\\ 0 & 8 & 5 & 1 & 0 & 1
+    \end{bmatrix} \\
+    &\begin{bmatrix}
+        1 & 3 & 4 & 1 & 0 & 0 \\ 0 & -10 & -6 & -3 & 1 & 0\\ 0 & 0 & 1/5 & 7/5 & 4/5 & 1
+    \end{bmatrix} \\
+    &\begin{bmatrix}
+        1 & 0 & 0 & 31/2 & -17/2 & -11 \\
+        0 & 1 & 0 & 9/2 & -5/2 & -3 \\
+        0 & 0 & 1 & -7 & 4 & 5
+    \end{bmatrix} \\
+\end{align*}
+
+$A_2^{-1} = \begin{bmatrix}
+    31/2 & -17/2 & -11 \\
+9/2 & -5/2 & -3 \\
+-7 & 4 & 5
+\end{bmatrix}$
+
+
+\problem{7}
+Find the eigenvalues and eigenvectors of the following matrices:
+$$A_1 = \begin{bmatrix}
+    1 & 0 & 0 \\
+    0 & 1 & 0 \\
+    0 & 0 & 2
+\end{bmatrix}, \; A_2 = \begin{bmatrix}
+    1 & 4 & 10 \\
+    0 & 2 & 0 \\
+    0 & 0 & 3
+\end{bmatrix}$$
+
+\soln
+
+Eigenvalues of $A_1$ are trivial since it is diagonal,
+we have $\lambda_1 = \lambda_2 = 1, \lambda_3 = 2$.
+We solve $\begin{bmatrix}
+    0 & 0 & 0 \\
+    0 & 0 & 0 \\
+    0 & 0 & 1
+\end{bmatrix} v_{1,2} = 0$ for eigenvectors with $\lambda = 1$,
+we see that $v_1 = \begin{pmatrix}
+    1 \\ 0 \\ 0
+\end{pmatrix}, \; v_2 \begin{pmatrix}
+    0 \\ 1 \\ 0
+\end{pmatrix}$ satisfy this. 
+Then we solve $\begin{bmatrix}
+    -1 & 0 & 0 \\
+    0 & -1 & 0 \\
+    0 & 0 & 0
+\end{bmatrix}v_3 = 0$ for the last vector, $v_3 = \begin{pmatrix}
+    0 \\ 0 \\ 1
+\end{pmatrix}$ satisfies this. 
+
+Once again, the eigenvalues are trivial since it is triangular
+$\lambda_1 = 1, \lambda_2 = 2, \lambda_3 = 3$
+We solve:
+$\begin{bmatrix}
+    0 & 4 & 10 \\
+    0 & 1 & 0 \\
+    0 & 0 & 2
+\end{bmatrix}v_1 = 0$,
+$v_1 = \begin{pmatrix}
+    1 \\ 0 \\ 0
+\end{pmatrix}$ satisfies this.
+We solve, $\begin{bmatrix}
+    -1 & 4 & 10 \\
+    0 & 0 & 0 \\
+    0 & 0 & 1
+\end{bmatrix}v_2 = 0$
+We get $v_2 = \begin{pmatrix}
+    4 \\ 1 \\ 0
+\end{pmatrix}$ satisfies this.
+
+We solve, $\begin{bmatrix}
+    -2 & 4 & 10 \\
+    0 & -1 & 0 \\
+    0 & 0 & 0
+\end{bmatrix}v_3 = 0$
+We get $v_3 = \begin{pmatrix}
+    5 \\ 0 \\ 1
+\end{pmatrix}$ satisfies this.
+
+\problem{8}
+Find similarity transformations that transform the following matrices into
+Jordan form:
+$$
+A_1 = \begin{bmatrix}
+    0 & 1 & 0 \\
+    0 & 0 & 1 \\
+    -2 & -4 & -3
+\end{bmatrix}, \; A_2 = \begin{bmatrix}
+    1 & 0 & -1 \\
+    0 & 1 & 0 \\
+    0 & 0 & 2
+\end{bmatrix}, \; A_3 = \begin{bmatrix}
+    0 & 4 & 3 \\
+    0 & 20 & 16 \\
+    0 & -25 & -20
+\end{bmatrix}
+$$
+
+\soln
+
+\begin{enumerate}
+    \item First we need to find the generalized eigenvectors.
+    We find the characteristic polynomial:
+    $-\lambda(3\lambda + \lambda^2 + 4) + -2(1) = -\lambda^3 -3 \lambda^2 - 4 \lambda - 2$.
+    The roots of which are: $\lambda_1 = -1 + i, \lambda_2 = -1 -i, \lambda_3 = -1$.
+    We get $v_1 = \begin{pmatrix}
+        i/2 \\ -1/2 - i/2 \\ 1
+    \end{pmatrix}, v_2 = \begin{pmatrix}
+        -i/2 \\ -1/2 + i/2 \\ 1
+    \end{pmatrix}, v_3 = \begin{pmatrix}
+        1 \\ -1 \\ 1
+    \end{pmatrix}$ as the corresponding eigenvectors. 
+
+    Let $Q = \begin{bmatrix}
+        i/2 & -i/2 & 1\\
+        -1/2 - i/2 & -1/2 + i/2 & -1\\
+        1 & -1 & 1
+    \end{bmatrix}$. Then $J = Q^{-1}AQ$
+
+
+    \item First we need the eigenvectors.
+    We find the characteristic polynomial: 
+    $(1-\lambda)((1-\lambda)(2-\lambda)) = -\lambda^3 + 4 \lambda ^2 - 5 \lambda + 2$.
+    It has roots $\lambda_1 = 1, \lambda_2 = 1, \lambda_3 = 2$.
+    We find the corresponding eigenvectors:
+    $v_1 = \begin{pmatrix}
+        1 \\ 0 \\ 0
+    \end{pmatrix}, v_2 = \begin{pmatrix}
+        0 \\ 1 \\ 0
+    \end{pmatrix}, v_3 = \begin{pmatrix}
+        -1 \\ 0 \\ 1
+    \end{pmatrix}$.
+    Then, we let $Q = \begin{bmatrix}
+        1 & 0 & -1 \\
+        0 & 1 & 0 \\
+        0 & 0 & 1
+    \end{bmatrix}$, and thus $J = Q^{-1}AQ$
+
+    \item We repeat the same process:
+    The characteristic polynomial is:
+    $-\lambda((20-\lambda)(-20-\lambda)+400) = \lambda(\lambda^2 - 400 + 400) = \lambda^3$.
+    Thus they are all repeated with $\lambda_i = 0$. 
+    Unfortunately, all the eigenvectors are not unique so we need to consider the generalized form.
+    The first one, $v_1$ is in the nullspace of $A$, and is $v_1 = \begin{pmatrix}
+        1 \\ 0 \\ 0
+    \end{pmatrix}$. 
+    Then we solve $A v_2 = v_1$, we see $v_2 = \begin{pmatrix}
+        0 \\ 4 \\ -5
+    \end{pmatrix}$.
+    Then we solve $A v_3 = v_2$, we see that $v_3 = \begin{pmatrix}
+        0 \\ -3 \\ 4
+    \end{pmatrix}$.
+    Then let $Q = \begin{bmatrix}
+        1 & 0 & 0 \\
+        0 & 4 & -3 \\
+        0 & -5 & 4
+    \end{bmatrix}$,
+    then $J = Q^{-1}AQ$
+
+\end{enumerate}
+
+
+\problem{9}
+Let $$A = \begin{bmatrix}
+    \sigma & \omega \\ -\omega & \sigma
+\end{bmatrix}$$
+Which has eigenvalues $\sigma \pm i \omega$. Find $e^{At}$
+\soln
+
+So we know $\Delta(\lambda) = (\lambda - \sigma + i \omega)(\lambda - \sigma + i \omega)$,
+then $h(\lambda) = \beta_0 + \beta_1 \lambda$,
+where such that $f(\sigma + i\omega) = h(\sigma + i\omega),$ and $f(\sigma - i\omega) = h(\sigma - i\omega)$
+We want 
+\begin{align*}
+    e^{t(\sigma + i \omega)} = e^{\sigma t} (\cos(\omega t) + i \sin(\omega t)) &= \beta_0 + \beta_1 (\sigma + i \omega) \\
+    e^{t(\sigma - i \omega)} = e^{\sigma t} (\cos(\omega t) - i \sin(\omega t)) &= \beta_0 + \beta_1 (\sigma - i \omega)
+\end{align*}
+We find $\beta_0 = e^{t(\sigma + i \omega)} - \beta_1(\sigma + i\omega)$,
+we substitute this into the second equation:
+\begin{align*}
+    e^{t(\sigma - i \omega)} &= e^{t(\sigma + i \omega)} - \beta_1(\sigma + i\omega) + \beta_1 (\sigma - i \omega) \\
+    e^{t(\sigma - i \omega)} - e^{t(\sigma + i \omega)} &= \beta_1 [(\sigma - i \omega) - (\sigma + i\omega) ]\\
+    (e^{\sigma t} (\cos(\omega t) - i \sin(\omega t))) - e^{\sigma t}(\cos(\omega t) + i \sin(\omega t)) &= \beta_1 (-2i \omega)\\
+    -2i e^{\sigma t} \sin(\omega t) &= \beta_1 (-2i \omega)\\
+    \frac{e^{\sigma t}}{\omega} \sin(\omega t) &= \beta_1
+\end{align*}
+Then from here
+\begin{align*}
+    \beta_0 &= e^{t(\sigma + i \omega)} - (\frac{e^{\sigma t}}{\omega} \sin(\omega t))(\sigma + i\omega)\\
+    &= e^{\sigma t} (\cos(\omega t) + i \sin(\omega t)) - (\frac{e^{\sigma t}}{\omega} \sin(\omega t))(\sigma + i\omega)\\
+    &=  e^{\sigma t} \cos(\omega t) + i e^{\sigma t} \sin(\omega t) - (\frac{e^{\sigma t}}{\omega} \sin(\omega t) \sigma + e^{\sigma t} \sin(\omega t) i)\\
+    \beta_0 &=  e^{\sigma t} \cos(\omega t) - \frac{\sigma e^{\sigma t}}{\omega} \sin(\omega t)
+\end{align*}
+
+Now we can get the matrix exponential:
+\begin{align*}
+    e^{At} &= \beta_0 I + \beta_1 A\\
+    &= \begin{bmatrix}
+        e^{\sigma t} \cos(\omega t) - \frac{\sigma e^{\sigma t}}{\omega} \sin(\omega t) & 0\\0 & e^{\sigma t} \cos(\omega t) - \frac{\sigma e^{\sigma t}}{\omega} \sin(\omega t)
+    \end{bmatrix} +
+    \begin{bmatrix}
+        \sigma \frac{e^{\sigma t}}{\omega} \sin(\omega t) & \omega \frac{e^{\sigma t}}{\omega} \sin(\omega t) \\
+        -\omega \frac{e^{\sigma t}}{\omega} \sin(\omega t) & \sigma \frac{e^{\sigma t}}{\omega} \sin(\omega t)
+    \end{bmatrix}\\
+    &=
+    \begin{bmatrix}
+        e^{\sigma t} \cos(\omega t) & e^{\sigma t} \sin(\omega t) \\
+        - e^{\sigma t} \sin(\omega t) & e^{\sigma t} \cos(\omega t) 
+    \end{bmatrix}
+\end{align*}
+
+
+
+\problem{10}
+Let $A = \begin{bmatrix}
+    1 & 1 & 0 \\ 0 & 0 & 1 \\ 0 & 0 & 1
+\end{bmatrix}$.
+Compute $A^{10}, A^{103}, $ and $e^{At}$
+
+\soln
+
+We unfortunately can't diagonalize this, so lets start multiplying and try to find a pattern.
+
+$A^2 = 
+\begin{bmatrix}
+    1 & 1 & 1 \\
+    0 & 0 & 1 \\
+    0 & 0 & 1 \\
+\end{bmatrix}
+$, $A^3 = 
+\begin{bmatrix}
+    1 & 1 & 2 \\
+    0 & 0 & 1 \\
+    0 & 0 & 1 \\
+\end{bmatrix}
+$, $A^4 = 
+\begin{bmatrix}
+    1 & 1 & 3 \\
+    0 & 0 & 1 \\
+    0 & 0 & 1 \\
+\end{bmatrix}
+$,\\ extrapolating from here we get
+$A^n = 
+\begin{bmatrix}
+    1 & 1 & n-1 \\
+    0 & 0 & 1 \\
+    0 & 0 & 1 \\
+\end{bmatrix}
+$.
+
+So $A^{10} = 
+\begin{bmatrix}
+    1 & 1 & 9 \\
+    0 & 0 & 1 \\
+    0 & 0 & 1 \\
+\end{bmatrix}
+$, $A^{103} = 
+\begin{bmatrix}
+    1 & 1 & 102 \\
+    0 & 0 & 1 \\
+    0 & 0 & 1 \\
+\end{bmatrix}
+$
+
+Since we have a generic form of the power of $A$, we can use the definition of the matrix exponential:
+
+\begin{align*}
+    e^{At} &= \sum_{k=0} ^\infty \frac{1}{k!} t^k A^k \\
+    &= \sum_{k=0} ^\infty \frac{1}{k!} t^k \begin{bmatrix}
+        1 & 1 & k-1 \\
+        0 & 0 & 1 \\
+        0 & 0 & 1 \\
+    \end{bmatrix}  \\
+    &= \begin{bmatrix}
+        \sum_{k=0} ^\infty \frac{1}{k!} t^k & \sum_{k=0} ^\infty \frac{1}{k!} t^k & \sum_{k=0} ^\infty \frac{1}{k!} t^k (k-1) \\
+         0 &  0 & \sum_{k=0} ^\infty \frac{1}{k!} t^k \\
+         0 &  0 & \sum_{k=0} ^\infty \frac{1}{k!} t^k \\
+    \end{bmatrix} \\
+    &= \begin{bmatrix}
+        e^t & e^t & \sum_{k=0} ^\infty \frac{1}{k!} t^k 1 - \sum_{k=0} ^\infty \frac{1}{k!} t^k k  \\
+        0 & 0 & e^t \\
+        0 & 0 & e^t \\
+    \end{bmatrix}\\
+    &= \begin{bmatrix}
+        e^t & e^t & e^t - t e^t  \\
+        0 & 0 & e^t \\
+        0 & 0 & e^t \\
+    \end{bmatrix}
+\end{align*}
+
+
+\problem{11}
+Determine if the following matrices are positive definite or positive semidefinite
+$$
+A_1 = \begin{bmatrix}
+    2 & 3 & 2 \\ 3 & 1 & 0 \\ 2 & 0 & 2
+\end{bmatrix}, \; A_2 = \begin{bmatrix}
+    0 & 0 & -1 \\ 0 & 0 & 0 \\ -1 & 0 & 2
+\end{bmatrix}, \; A_3 = \begin{bmatrix}
+    a_1a_1 & a_1 a_2 & a_1 a_3 \\
+    a_2 a_1 & a_2 a_2 & a_2 a_3 \\
+    a_3 a_1 & a_3 a_2 & a_3 a_3
+\end{bmatrix}
+$$
+
+\soln
+
+$A_1$ is neither, Consider the leading minor $\begin{bmatrix}
+    2 & 3 \\ 3 & 1
+\end{bmatrix}$ has determinate -7, which is negative.
+So it is not positive definite nor positive semi-definite by the 3rd equivalency statement in the book.
+
+$A_2$, lets find the eigenvalues. We will do it down the middle row.
+$(1)(-\lambda) \begin{vmatrix}
+    -\lambda & -1\\ -1 & 2- \lambda
+\end{vmatrix} = -\lambda(\lambda^2 - 2 \lambda - 1)$, which has roots $0, 1 \pm \sqrt{2}$.
+This has negative roots, so it is not positive definite nor positive semidefinite.
+
+$A_3$, is actually a proof that I remember having fun with in Undergrad.
+First, note that this is an outer-product of $B = \begin{pmatrix}
+    a_1 \\ a_2 \\ a_3
+\end{pmatrix}$ (ie. $A = BB^T$).
+We use the definition of definiteness, we want to show 
+$\forall x \in \reals^3$ $x^T A x \geq 0$.
+$x^T A x = x^T B B^T x = (Bx)^TBx = \lVert Bx \rVert _2^2$
+which is greater than or equal to zero for all $x$ by definition of norm.
+So it is semidefinite!!
+
+
+\problem{12}
+Compute the singular values of:
+$$
+A_1 = \begin{bmatrix}
+    -1 & 0 & 1\\2 & -1 & 0
+\end{bmatrix}, \; A_2 = \begin{bmatrix}
+    -1 & 2 \\ 2 & 4
+\end{bmatrix}
+$$
+
+\soln
+
+\begin{enumerate}
+    \item First we compute the singular values, which are $\sqrt{\lambda(AA^T)}$.
+    $AA^T = \begin{bmatrix}
+        2 & -2 \\ -2 & 5
+    \end{bmatrix}$, which has characteristic polynomial $-\lambda^2 + 7\lambda - 6$,
+    with roots 6, 1. So our singular values are: $\sqrt{6}, 1$: $\Sigma = \begin{bmatrix}
+        \sqrt{6} & 0 & 0 \\ 0 & 1 & 0
+    \end{bmatrix}$
+    We find the eigenvectors that correspond to these eigenvalues,
+    $v_1 = \begin{pmatrix}
+        -1 \\ 2
+    \end{pmatrix}, v_1 = \begin{pmatrix}
+        2 \\ 1
+    \end{pmatrix}$.
+    We should normalize, and put them as columns of $U$:
+    $U = \begin{bmatrix}
+        -1/\sqrt{5} & 2 / \sqrt{5} \\
+        2/\sqrt{5} & 1/\sqrt{5}
+    \end{bmatrix}$
+    Last, we compute $V$ from the eigenvectors of $A^TA$.
+    $A^TA = \begin{bmatrix}
+        5 & -2 & -1 \\ -2 & 1 & 0 \\ -1 & 0 & 1
+    \end{bmatrix}$, which we know has eigenvalues 6,1,0.
+    Then I used matlab to solve for the eigenvectors:
+    $\bar{V} = \begin{bmatrix}
+        -5 & 0 & 1\\2 &1&2\\1&-2&1
+    \end{bmatrix}$, we normalize each column to get:
+    $V = \begin{bmatrix}
+        -5/\sqrt{30} & 0 & 1/\sqrt{6}\\
+        2/\sqrt{30} &1/\sqrt{5}&2/\sqrt{6}\\
+        1/\sqrt{30}&-2/\sqrt{5}&1/\sqrt{6}
+    \end{bmatrix}$
+
+    \item First, note $A_2 = \begin{bmatrix}
+        -1 & 2 \\ 2 & 4
+    \end{bmatrix}$ is diagonal, so the eigenvectors are the same ($A^TA = AA^T$, so $A^TA u = AA^T v = \lambda u = \lambda v$).
+    $AA^T = \begin{bmatrix}
+        5 & 6 \\ 6 & 20
+    \end{bmatrix}$, which has characteristic polynomial $\lambda^2 - 25\lambda + 64$.
+    Which has eigenvalues:
+    $\frac{25 \pm \sqrt{625 - 4*64}}{2} = \frac{25 \pm 3\sqrt{41}}{2}$.
+    So the singular values are the square root of this:
+    $\Sigma \approx \begin{bmatrix}
+        4.7016 & 0 \\ 0 & 1.7016
+    \end{bmatrix}$. Perhaps a better way to do this would be the absolute value of eigenvalues of A:
+    $= \left| \frac{3 \pm \sqrt(41)}{2} \right|$.
+    Now we need to find the eigenvectors:
+    $AA^T - \lambda_1I = \begin{bmatrix}
+        -1 - \frac{25 + 3\sqrt{41}}{2} & 2 \\
+        2 & 4 - \frac{25 + 3\sqrt{41}}{2}
+    \end{bmatrix}v = 0$. We simplify:
+    \begin{align*}
+        \begin{bmatrix}
+            5 - \frac{25 + 3\sqrt{41}}{2} & 6 \\
+            6 & 20 - \frac{25 + 3\sqrt{41}}{2}
+        \end{bmatrix}v = 0 \\
+        \begin{bmatrix}
+            -\frac{15 + 3\sqrt{41}}{2} & 6 \\
+            6 & -\frac{-15 + 3\sqrt{41}}{2}
+        \end{bmatrix}v = 0 \\
+    \end{align*}
+    pick $v_2 = 1$, then $v_1 = 6 / \frac{15 + 3\sqrt{41}}{2} = \frac{12}{15 + 3 \sqrt{41}} = \frac{-5 + \sqrt{41}}{4}$.
+    So $v_1 = \begin{pmatrix}
+        \frac{-5 + \sqrt{41}}{4} \\ 1
+    \end{pmatrix}$.
+    Similarly, we just flip the sign of the radical and get:
+    $v_2 = \begin{pmatrix}
+        \frac{-5 - \sqrt{41}}{4} \\ 1
+    \end{pmatrix}$.
+    We have to normalize, where we divide $v_1$ by $\sqrt{1 + \frac{-5 + \sqrt{41}}{16}}$,
+    and $v_2$ by $\sqrt{1 + \frac{-5 - \sqrt{41}}{16}}$.
+    This is ugly, so we just write the decimal form:
+    So then $U = \begin{bmatrix}
+        0.331 & -0.9436 \\ 0.9436 & 0.331
+    \end{bmatrix}$. We know $A^Tu_i = \sigma_i * v_i$,
+    since $A = A^T$ we would think that $v_i = u_i$,
+    but we can have a sign error due to a negative eigenvalue of $A$.
+    Since $\lambda_2$ is negative, we need to flip the sign: $v_2 = -u_2$,
+    thus:
+    $V = \begin{bmatrix}
+        0.331 & 0.9436 \\ 0.9436 & -0.331
+    \end{bmatrix} $
+    
+
+\end{enumerate}
+
+
+
+\end{document}
