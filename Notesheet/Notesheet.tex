@@ -1,0 +1,56 @@
+\documentclass[11pt]{article}
+\usepackage{../EllioStyle}
+\usepackage{listings}
+\usepackage{multicol}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\graphicspath{ {imgs/} }
+
+\title{Notesheet}
+\author{Elliott Pryor}
+\date{19 October 2022}
+
+\lhead{Elliott Pryor}
+\rhead{Notesheet}
+
+\begin{document}
+\multicols{2}
+
+\section{Dynamics}
+Generally: $\dot{x} = f(x,u), y = h(x,u)$, $x \in \reals^n, u \in \reals^m$.\\
+Jacobian Linearization: given $u = u_0, x=x_0$ is a stationary point ($f(x_0, u_0) = 0$),
+then $\dot{x} \approx J_{f,x}x + J_{f,u}u, y \approx J_{h,x}x + J_{h,u}u$ \\
+
+
+\section{Matrices}
+Linear dependence $\exists \alpha_1, \dots \alpha_m$ not all zero, $\alpha_1 x_1 + \dots + \alpha_m x_m = 0$.\\
+Similarity: $B$ is similar to $A$ if $\exists Q, \, st. \, B = QAQ^{-1}$.
+
+
+Cayley-Hamilton: let $\Delta(\lambda) = det(A - \lambda I)$, then $\Delta(A) = 0$.\\
+For any $f(A)$: $f(A) = \beta_0 I + \dots + \beta_{n-1}A^{n-1}$.
+If $f$ polynomial, let $h(\lambda) = \beta_0 + \beta_1 \lambda + \dots + \beta_{n-1} \lambda ^{n-1}$,
+solved from $f^{(l)}(\lambda_i) = h^{(l)}(\lambda_i)$.
+
+Matrix exponential: $e^{At} = \sum_{k=0}^\infty \frac{1}{k!} t^k A^k$\\
+$e^{A(t_1 + t_2)} = e^{At_1}e^{At_2}$, $(e^{At})^{-1} = e^{-At}$, $\frac{d}{dt} e^{At} = e^{At}A = A e^{At}$,
+$e^{At} = \mathcal{L}^{-1}((sI - A)^{-1})$
+
+\begin{center}
+    \includegraphics[width=0.9\linewidth]{cayleyhamilton.png}
+\end{center}
+
+
+\section{Other}
+
+$rank(A) = $ \# of independent columns = size of largest-square submatrix with nonzero det.
+$rank(A) + nullity(A) = $\# of columns. \\
+
+Capacitor - $i = C \frac{dv}{dt}$, Inductor: $v = L \frac{di}{dt}$, Friction $F = -k v$
+
+
+\end{document}
