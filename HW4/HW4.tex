@@ -1,6 +1,7 @@
 \documentclass[11pt]{article}
 \usepackage{../EllioStyle}
 \usepackage{listings}
+\usepackage{mathtools}
 
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
@@ -204,7 +205,32 @@ are the principal moments of inertia.
 
 \soln
 
+\begin{enumerate}[(a)]
+    \item We choose Lyaponov function: $V(x) = 1/2 w_1^2 + 1/2 w_2^2 + 1/2 w_3^2$.
+    Then the derivative is:
+    \begin{align*}
+        \dot{V} &= \omega_1 \dot{\omega_1} + \omega_2 \dot{\omega_2} + \omega_3 \dot{\omega_3}\\
+        &= \omega_1 (J_2 - J_3)(\omega_2\omega_3) + \omega_2 (J_3 - J_1)\omega_3\omega_1 + \omega_3 (J_1 - J_2)\omega_1\omega_2\\
+        &= (J_2 - J_3)\omega_1\omega_2\omega_3 + (J_3 - J_1)\omega_1\omega_2\omega_3 + (J_1 - J_2)\omega_1\omega_2\omega_3\\
+        &= (J_2 - J_3 + J_3 - J_1 + J_1 - J_2)\omega_1\omega_2\omega_3\\
+        &= 0
+    \end{align*}
+    So it is stable.
+    But it is not less than zero for all $\omega$, so it is not asymptotically stable.
 
+    \item We choose Lyaponov function: $V(x) = 1/2 \omega_1^2 + 1/2 \omega_2^2 + 1/2 \omega_3^2$.
+    Then the derivative is:
+    \begin{align*}
+        \dot{V} &= \omega_1 \dot{\omega_1} + \omega_2 \dot{\omega_2} + \omega_3 \dot{\omega_3}\\
+        &= \omega_1 [(J_2 - J_3)(\omega_2\omega_3) - k_1\omega_1] + \omega_2 [(J_3 - J_1)\omega_3\omega_1 - k_2\omega_2] + \omega_3 [(J_1 - J_2)\omega_1\omega_2 - k_3\omega_3]\\
+        &= (J_2 - J_3)\omega_1\omega_2\omega_3 - k_1\omega_1^2 + (J_3 - J_1)\omega_1\omega_2\omega_3 - k_2\omega_2^2 + (J_1 - J_2)\omega_1\omega_2\omega_3 - k_3\omega_3^2\\
+        &= (J_2 - J_3 + J_3 - J_1 + J_1 - J_2)\omega_1\omega_2\omega_3 - k_1\omega_1^2 - k_2\omega_2^2 - k_3\omega_3^2\\
+        &= -k_1\omega_1^2 - k_2\omega_2^2 - k_3\omega_3^2\\
+    \end{align*}
+    Which is less than zero for all $\omega \neq 0$ and $V(x) \to \infty$ as $x \to \infty$, so it is globally asymptotically stable.
+    
+
+\end{enumerate}
 
 
 \problem{7}
@@ -223,9 +249,17 @@ are correct if $x(0) = 0$?
 
 \soln
 
+This is about the principal of superposition which states,
+$$
+\begin{rcases*}
+    \alpha_1x_1(t_0) + \alpha_2x_2(t_0) \\
+    \alpha_1u_1(t) + \alpha_2x_2(t), \; t \geq t_0
+\end{rcases*} \implies \alpha_1y_1(t) + \alpha_2y_2(t), \; t \geq t_0
+$$
 
-
-
+Case 1 is true for $x(0) = 0$, but not for $x(0) \neq 0$ because $x_3(0) = x(0)$ instead of $2x(0)$.\\
+Case 2 is true for both $x(0) = 0$ and $x(0) \neq 0$.\\
+Case 3 is true for $x(0) = 0$, but not for $x(0) \neq 0$ because $x_3(0) = x(0)$ instead of $0$.\\
 
 \problem{8}
 
@@ -243,6 +277,28 @@ $$
 
 \soln
 
+In class we learned the integrating factor method.
+Which says $x(t) = e^{A(t - t_0)}x_0 + \int_{t_0}^t e^{A(t - \tau)} u(\tau) d\tau$.
+In this case, we don't have any u, so we can ignore the integral.
+So we just need to find $e^{At}$.
+
+We first need eigenvalues of $A$:
+$\lambda^2 + 1 = 0 \implies \lambda = \pm i$. 
+Then with Cayley-Hamilton we let $f(\lambda) = e^{\lambda t}$,
+and $h(\lambda) = \beta_0 + \beta_1 \lambda$.
+We have the following system of equations:
+$\begin{cases}
+    f(i) = h(i)\\
+    f(-i) = h(-i)
+\end{cases} = \begin{cases}
+    e^{it} = \cos t + i \sin t = \beta_0 + \beta_1 i\\
+    e^{-it} = \cos t - i \sin t = \beta_0 - \beta_1 i
+\end{cases}$
+So $\beta_0 = \cos t$ and $\beta_1 = \sin t$
+
+So we have $e^{At} = \cos t I + \sin t A = \begin{bmatrix}
+    \cos t & \sin t \\ - \sin t & \cos t
+\end{bmatrix}$.
 
 
 
@@ -261,7 +317,59 @@ Find the unit-step response of the linear system.
 \end{align*}
 \soln
 
+So the unit step is: $u(t) = \begin{cases}
+    1 & t \geq 0\\
+    0 & t < 0
+\end{cases}$.
 
+We know the general form of the response is:
+$y(t) = Ce^{At}x(0) + C \int_0 ^t e^{A (t - \tau)} B u(\tau) d\tau + Du(t)$.
+For our case ($x(0) = 0$, $u(t) = 1$), it simplifies to 
+$y(t) = C e^{At} \left( \int_0^t e^{-A\tau} d\tau  \right)B$
+
+So first order of business is finding $e^{At}$.
+We know $\lambda^2 + 2 \lambda + 2 = 0$, so $\lambda = -1 \pm i$.
+Then with Cayley-Hamilton we let $f(\lambda) = e^{\lambda t}$,
+and $h(\lambda) = \beta_0 + \beta_1 \lambda$.
+We have the following system of equations:
+$\begin{cases}
+    f(-1 + i) = h(-1 + i)\\
+    f(-1 - i) = h(-1 - i)
+\end{cases} = \begin{cases}
+    e^{-t}(\cos t + i \sin t) = \beta_0 + \beta_1 (-1 + i)\\
+    e^{-t}(\cos t - i \sin t) = \beta_0 + \beta_1 (-1 - i)
+\end{cases}$\\
+So $\beta_0 = e^{-t} \cos t + e^{-t} \sin t$ and $\beta_1 = e^{-t} \sin t$.
+Thus $e^{At} = \begin{bmatrix}
+    e^{-t} \cos t + e^{-t} \sin t & e^{-t} \sin t \\ - 2e^{-t} \sin t & e^{-t} \cos t - e^{-t} \sin t
+\end{bmatrix}$
+
+We also know from the derivative property of exponential that the integral: $\int_0^t e^{-A\tau} d\tau = \Eval{e^{-At}A^{-1}(-1)}{0}{t} = A^{-1} - e^{-At}A^{-1}$.
+So we have:
+\begin{align*}
+    y(t) &= Ce^{At} \left( A^{-1} - e^{-At}A^{-1} \right)B\\
+    &= Ce^{At}A^{-1}B - Ce^{At}e^{-At}A^{-1}B\\
+    &= Ce^{At}A^{-1}B - CA^{-1}B\\
+\end{align*}
+
+Then, we can find:
+$A^{-1}B = \begin{bmatrix}
+    -3/2\\1
+\end{bmatrix}$, so $CA^{-1}B = 0$
+
+Then we find:
+$Ce^{At} = \begin{bmatrix}
+    2e^{-t} \cos t + 2 e^{-t} \sin t - 6e^{-t} \sin t&
+    2e^{-t} \sin t + 3e^{-t} \cos t - 3 e^{-t} \sin t
+\end{bmatrix} =\\ \begin{bmatrix}
+    2e^{-t} \cos t - 4 e^{-t} \sin t&
+    3e^{-t} \cos t - e^{-t} \sin t
+\end{bmatrix}$
+
+Then we multiply this by $A^{-1}B$ resulting in:
+$$
+y(t) = -3e^{-t} \cos t + 6 e^{-t} \sin t + 3e^{-t} \cos t - e^{-t} \sin t = 5e^{-t} \sin t
+$$
 
 \problem{10}
 Consider the system:
@@ -273,8 +381,22 @@ Consider the system:
 \begin{enumerate}[(a)]
     \item Show that the system has a unique equilibrium point
     \item Using linearization, show the equilibrium point is asymptotically stable
-    \item Show the equilibrium point is not globally asymptotically stable
 \end{enumerate}
 \soln
+
+
+\begin{enumerate}[(a)]
+    \item Clearly $x_1$ must equal zero at equilibrium. So using this knowledge to solve for $x_2$, we get:
+    $0 = (-1)x_2^3 -x_2$, so $x_2 = 0$ is the only real value that satisfies this equation.
+    \item We compute the jacobian:
+    $J_f = \begin{bmatrix}
+        -1 & 0 \\ x_2^4 + x_2^2 - 2x_1x_2 & 3x_1x_2^3 + 3x_1x_2^2 + 2x_1x_2 - 1 - x_1^2
+    \end{bmatrix}$,
+    we evaluate at $(0,0)$:
+    $J_{0,0} = \begin{bmatrix}
+        -1 & 0 \\ 0 & -1
+    \end{bmatrix}$, where the eigenvalues are clearly $-1, -1$ which are both negative, so it is asymptotically stable!
+
+\end{enumerate}
 
 \end{document}
