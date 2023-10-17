@@ -30,8 +30,29 @@ value of $\alpha$ and any value of the initial condition specified.
 
 \soln
 
+\begin{enumerate}[(a)]
+    \item $\dot{x} = x^\alpha, \; \alpha > 1, x(0) > 0$. 
+    We solve and integrate both sides:
+    \begin{align*}
+         \frac{1}{-\alpha + 1}x^{-\alpha + 1} &= t + c\\
+         x^{-\alpha + 1} &= (-\alpha + 1)(t+c)\\
+         x^{\alpha - 1} &= \frac{1}{(-\alpha + 1)t + c}\\
+         \ln(x) &= \frac{1}{\ln((-\alpha + 1)t + c) (\alpha - 1)}\\
+         x &= \frac{1}{((-\alpha + 1)t + c)^{\alpha - 1}}\\
+    \end{align*}
+    We then choose $c$ to satisfy the initial condition: $x(0) = \frac{1}{c^{\alpha - 1}} = c^{-\alpha + 1}$.
+    So $c = x(0)^{\frac{1}{-\alpha + 1}}$.
+    This system has a pole at $t = \frac{c}{-\alpha + 1}$, where the inner portion goes to zero.
+    Thus x goes to $1/0^{\alpha - 1} = 1/0 = \infty$ at $t = x(0)^{\frac{1}{-\alpha + 1}}/(-\alpha + 1)$ (finite)
 
-
+    \item We have that basically the same solution satisfies the equation,
+    we simply need to change the $\frac{1}{-\alpha + 1}$ in the first step, to $\frac{-1}{-\alpha + 1}$.
+    Which results in $x = \frac{1}{((\alpha - 1)t + c)^{\alpha - 1}}$, and the same value for $c$.
+    $c = x(0)^{\frac{1}{-\alpha + 1}} = \sqrt[-\alpha + 1]{x(0)}$. 
+    The term in front of $t$ is certainly positive ($\alpha > 1$), but our constant term is negative, since we are taking an odd root 
+    thus it is unique and $x(0)$ is negative, so $c$ must be negative. 
+    Then we have a division by zero at $t = \sqrt[-\alpha + 1]{x(0)}/(\alpha - 1)$.
+\end{enumerate}
 
 
 \problem{2}
@@ -42,7 +63,26 @@ then $f_1 + f_2$, $f_1 f_2$, $f_2 \circ f_1$ are all locally Lipschitz.
 
 
 
-
+\begin{enumerate}
+    \item We want to show $||(f_1(x) + f_2(x)) - (f_1(y) + f_2(y))|| \leq L||x - y||$.
+    Norm satisfies the triangle inequality, thus \\
+    $||(f_1(x) - f_1(y)) - (f_2(y) + f_2(y))|| \leq  L_1||x - y|| + L_2||x - y|| = (L_1 + L_2)||x_ - y||$ as required.
+    \item We want to show $||f_1(x)f_2(x) - f_1(y)f_2(y)|| \leq L||x - y||$.
+    This one is trickier
+    \begin{align*}
+        ||f_1(x)f_2(x) - f_1(y)f_2(y)|| &= ||f_1(x)f_2(x) - f_1(y)f_2(y) + f_1(x)f_2(y) - f_1(x)f_2(y)||\\
+        &= ||f_1(x)(f_2(x) - f_2(y)) + (f_1(x) - f_1(y))f_2(y) || \\
+        &\leq ||f_1(x)|| L_1| |x - y|| + ||f_2(y)|| L_2 ||x - y||\\
+    \end{align*} 
+    Now we need to bound $||f_1(x)||$ and $||f_2(y)||$.
+    Since it is locally Lipschitz, we know that $x,y$ are in a ball of radius $r< \infty$ around some point $x_0$.
+    Thus the distance $||x-y||$ is bounded, so $f$ must also be bounded.
+    Thus $||f_1(x)|| \leq M_1$ and $||f_2(y)|| \leq M_2$.
+    So finally, we have $||f_1(x)f_2(x) - f_1(y)f_2(y)|| \leq (M_1L_1 + M_2L_2)||x - y||$.
+    \item We want to show $||f_2(f_1(x)) - f_2(f_1(y))|| \leq L||x - y||$.
+    Consider $a = f_1(x)$, $b = f_1(y)$, then we have $||f_2(a) - f_2(b)|| \leq L_2||a - b||$.
+    So now we have $||f_2(f_1(x)) - f_2(f_1(y))|| \leq L_2 ||f_1(x) - f_1(y)|| \leq L_2L_1||x-y||$
+\end{enumerate}
 
 
 
@@ -61,7 +101,15 @@ it is locally Lipschitz.
 
 \soln
 
-
+\begin{enumerate}
+    \item Is only locally Lipschitz. Its growth is faster than linear, so it is not globally Lipschitz.
+    However, it is bounded on any finite interval, so it is locally Lipschitz on any finite interval.
+    \item It is globally Lipschitz: $||f(x) - f(y)|| = |||x| - |y||| \leq ||x - y||$.
+    \item It is locally Lipschitz: for positives: $||f(x) - f(y)|| = |x + 1 - y - 1| = |x - y|$, for negatives: $||f(x) - f(y)|| = |x - 1 - y + 1| = |x - y|$
+    for alternate signs: $|x + 1 - y + 1| = |x - y + 2|$. This last case is violated near zero, so it is only locally Lipschitz, on either the positive or negative reals.
+    \item It is globally Lipschitz: $||f(x) - f(y)|| = ||\sin(x) - \sin(y)|| \leq ||x - y||$.
+    \item It is globally Lipschitz, since $|f(x)| \leq |x|$
+\end{enumerate}
 
 
 
@@ -72,7 +120,31 @@ $\dot{x_1} = x_2$, $\dot{x_2} = -x_1 + x_2(2 - 3x_1^2 - 2 x_2^2)$
 
 \soln
 
+Clearly the origin is the only equilibrium point.
+We need to compute the jacobian:
+$$
+J = \begin{bmatrix}
+    0 & 1 \\ -1 - 6x_1x_2 & 2 - 3x_1^2 - 6x_2^2
+\end{bmatrix} = (\text{eval at origin}) = \begin{bmatrix}
+    0 & 1 \\ -1 & 2
+\end{bmatrix}
+$$
+Which has repeated eigenvalue 1, which is positive, so we satisfy the first condition.
 
+Now we need to find a bounded region, where all trajectories stay within. 
+Let $\mathcal{M} = \{x \in \reals^2: V(x) \leq c\}$ where $V$ is a circle $V(x) = x_1^2 + x_2^2$.
+We need to show that $\dot{V} \leq 0$ on the boundary of $\mathcal{M}$.
+\begin{align*}
+    \dot{V} &= \frac{\partial V}{\partial x_1}f_1 + \frac{\partial V}{\partial x_2} f_2 \\
+    &= 2x_1x_2 + 2x_2(-x_1 + 2x_2 - 3x_1^2x_2 - 2x_2^3)\\
+    &= 2x_1x_2 - 2x_1x_2 + 4x_2^2 - 6x_1^2x_2^2 - 4x_2^4\\
+    &= 4x_2^2 - 6x_1^2x_2^2 - 4x_2^4\\
+    &= 2x_2^2(2 - 3x_1^2 - 2x_2^2)\\
+\end{align*}
+The sign of this is dictated by $2 - 3x_1^2 - 2x_2^2$, so we want $2 < 3x_1^2 + 2x_2^2$.
+This is an ellipse, so we can choose $c$ to be the major axis of the ellipse, and we are done!
+We choose $c > 1$ (major axis of ellipse is on y axis, with length 1) which is a circle strictly larger than the ellipse.
+Thus $\dot{V} \leq 0$ on the boundary of $\mathcal{M}$, and we have a periodic orbit!
 
 \problem{5}
 Consider the following nonlinear system:
@@ -86,9 +158,29 @@ Show that the system has a stable limit cycle.
 \soln
 
 
+We convert first to polar coordinates: $x_1 = r \cos \theta$, $x_2 = r \sin \theta$, $r = \sqrt{x_1^2 + x_2^2}$, $\theta = \arctan \frac{x_2}{x_1}$.
+Then we have:
+\begin{align*}
+    \dot{r} &= \frac{2x_1\dot{x_1} + 2x_2 \dot{x_2}}{2\sqrt{x_1^2 + x_2^2}}\\
+    &= \frac{\left[2x_1^2(x_1^2 + x_2^2)(A - \sqrt{x_1^2 + x_2^2}) - 2x_1x_2\right] + \left[ 2x_1x_2 + 2x_2^2(x_1^2 + x_2^2)(A - \sqrt{x_1^2 + x_2^2}) \right]}{2\sqrt{x_1^2 + x_2^2}}\\
+    &= \frac{2x_1^2r^2(A - r) - 2x_1x_2 + 2x_1x_2 + 2x_2^2r^2(A - r)}{2r}\\
+    &= \frac{2r^2(A - r)(x_1^2 + x_2^2)}{2r} \\
+    &= r^3(A - r)\\
+\end{align*}
 
+Next for $\dot{\theta}$:
+\begin{align*}
+    \dot{\theta} &= \frac{1}{1 + \left(\frac{x_2}{x_1}\right)^2} \frac{x_1\dot{x_2} - x_2\dot{x_1}}{x_1^2} \\
+    &= \frac{x_1^2}{r^2} \frac{\left[ x_1^2 + x_1x_2 r^2 (A - r) \right] - \left[x_1x_2r^2(A-r) - x_2^2 \right]}{x_1^2}\\
+    &= \frac{x_1^2 + x_2^2}{r^2} \\
+    &= \frac{r^2(\cos^2 \theta + \sin^2 \theta)}{r^2}\\
+    &= \cos^2(\theta) + \sin^2(\theta)\\
+    &= 1\\
+\end{align*}
 
-
+So based on this, $\dot{\theta}$ is always positive, so it is always turning,
+but $\dot{r} = 0$ when $r = A$, so we have a limit cycle at $r = A$.
+It is stable, when $r > A$ $\dot{r} < 0$ and when $r < A$ $\dot{r} > 0$
 
 \problem{6}
 
@@ -109,6 +201,10 @@ are the principal moments of inertia.
     where $k_1, k_2, k_3$ are positive constants. Show that the origin $\omega = 0$ is globally
     asymptotically stable.
 \end{enumerate}
+
+\soln
+
+
 
 
 \problem{7}
