@@ -1,0 +1,147 @@
+\documentclass[11pt]{article}
+\usepackage{../EllioStyle}
+\usepackage{listings}
+\usepackage{mathtools}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\graphicspath{ {imgs/} }
+
+\title{Homework 5}
+\author{Elliott Pryor}
+\date{8 November 2023}
+
+\rhead{Homework 5}
+\lhead{Elliott Pryor}
+
+\begin{document}
+\maketitle
+
+\problem{1}
+Find the laplace transform of:
+
+$$
+f(t) = \begin{cases}
+    0, & t<0\\
+    te^{-3t}, & t \geq 0
+\end{cases}
+$$
+\soln
+
+
+
+
+\problem{2}
+Find the laplace transform of:
+
+$$
+f(t) = \begin{cases}
+    0, & t<0\\
+    \sin(\omega t + \theta), & t \geq 0
+\end{cases}
+$$
+\soln
+
+
+
+
+
+\problem{3}
+Given:
+$$
+F(s) = \frac{2(s + 2)}{s (s+1) (s+3)}
+$$
+use the Initial Value theorem to determine $f(0)$
+\soln
+
+
+
+
+
+
+
+
+
+
+
+
+\problem{4}
+Given
+$$
+F(s) = \frac{5(s+2)}{s(s+1)(s+3)}
+$$
+use the Final Value theorem to determine $f(\infty)$
+\soln
+
+
+
+
+
+
+
+
+
+
+
+
+\problem{5}
+Find the inverse laplace transform of:
+$$
+F(s) = \frac{s + 3}{(s+1)(s+2)}
+$$
+\soln
+
+
+
+
+
+
+
+
+\problem{6}
+Find the inverse laplace transform of:
+$$
+F(s) = \frac{1}{s(s^2 + 2s +2)}
+$$
+\soln
+
+
+
+
+
+
+
+
+\problem{7}
+A LTI system is described by:
+\begin{align*}
+    \dot{x} &= \begin{bmatrix}
+        1&0\\1&1
+    \end{bmatrix}x + \begin{pmatrix}
+        1\\0
+    \end{pmatrix}u \\
+    y &= \begin{pmatrix}
+        1 & 2
+    \end{pmatrix} x
+\end{align*}
+Find the transfer function of the system.
+
+\soln
+
+
+
+
+
+\problem{8}
+Find a state space realization of the transfer function:
+$$
+G(s) = \frac{s^3}{s^3 + 3s^2 + 2s + 1}
+$$
+\soln
+
+
+
+\end{document}
