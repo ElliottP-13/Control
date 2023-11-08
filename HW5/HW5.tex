@@ -31,7 +31,9 @@ f(t) = \begin{cases}
 $$
 \soln
 
-
+This is frequency shift ($e^{-\alpha t} f(t)$),
+which is $F(s + \alpha)$, so $f(t) = t, \implies F(s) = 1/s^2$.
+So our answer is $\mathcal{L}[f(t)] = \frac{1}{(s+3)^2}$
 
 
 \problem{2}
@@ -45,9 +47,14 @@ f(t) = \begin{cases}
 $$
 \soln
 
+We know from trig rules that $\sin(a + b) = \sin(a)\cos(b) + \cos(a) \sin(b)$.
+So we re-write $f(t) = \sin(\omega t) \cos(\theta) + \cos(\omega t) \sin(\theta)$
+Then we know the laplace:
 
-
-
+$$
+F(s) = \frac{\cos(\theta) \omega}{s^2 + \omega^2} + \frac{\sin(\theta) s}{s^2 + w^2} = 
+\frac{\cos(\theta)\omega + \sin(\theta)s}{s^2 + \omega^2}
+$$
 
 \problem{3}
 Given:
@@ -57,7 +64,9 @@ $$
 use the Initial Value theorem to determine $f(0)$
 \soln
 
-
+Initial value theorem is $f(0) = \lim_{s\to \infty} s F(s)$,
+so we get $\lim_{s \to \infty} \frac{2s(s + 2)}{s (s+1) (s+3)} = 0$
+since it is quadratic on top and cubic on bottom.
 
 
 
@@ -76,6 +85,9 @@ $$
 use the Final Value theorem to determine $f(\infty)$
 \soln
 
+Final value theorem is $f(\infty) = \lim_{s\to 0} s F(s)$,
+so we get \\
+$\lim_{s \to 0} \frac{5s(s+2)}{s(s+1)(s+3)} = \lim_{s \to 0} \frac{5s + 10}{s^2 + 4s + 3} = 10/3$
 
 
 
