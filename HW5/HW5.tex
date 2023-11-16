@@ -106,8 +106,17 @@ F(s) = \frac{s + 3}{(s+1)(s+2)}
 $$
 \soln
 
+We do partial fractions expansion:
+$F(s) = \frac{N(s)}{D(s)}$.
+We know that $N(s) = (s+3)$ and $D(s) = (s+1)(s+2)$.
+We expand: $F(s) = \frac{a_1}{s+1} + \frac{a_2}{s+2}$.
+We find $a_1 = \Eval{\frac{s + 3}{(s+2)}}{s=-1}{} = 2$,
+and $a_2 = \Eval{\frac{s + 3}{(s+1)}}{s=-2}{} = -1$.
+So $F(s) = \frac{2}{s+1} - \frac{1}{s+2}$.
 
-
+Then inverse laplace:
+$f(t)$ is the sum of the inverse laplace of each term.
+So, $f(t) = 2e^{-t} - e^{-2t}$
 
 
 
@@ -120,11 +129,14 @@ F(s) = \frac{1}{s(s^2 + 2s +2)}
 $$
 \soln
 
+So we have a repeated pole problem. 
+$F(s) = \frac{1}{s(s^2 + 2s +2)} = \frac{a_1}{s} + \frac{a_2}{(s+1)^2} + \frac{a_3}{s+1}$
+$a_1 = \Eval{\frac{1}{s^2 + 2s + 2}}{s=0}{} = \frac{1}{2}$,
+$a_2 = \Eval{\frac{1}{s}}{s=-1}{} = -1$,
+and the tricky one: $a_3 = \Eval{\frac{d}{ds} \frac{1}{s}}{s=-1}{} = \Eval{\frac{-1}{s^2}}{s=-1}{} = -1$\\
+So: $F(s) = \frac{1}{2s} + \frac{-1}{(s+1)^2} + \frac{-1}{s+1}$
 
-
-
-
-
+Then $f(t) = 1/2 - t e^{-t} - e^{-t}$
 
 
 \problem{7}
@@ -143,7 +155,29 @@ Find the transfer function of the system.
 
 \soln
 
+$G(s) = C(sI - A)^{-1}B + D$.
+So we first need $(sI - A)^{-1} = \begin{bmatrix}
+    s-1 & 0\\-1 & s-1
+\end{bmatrix}^{-1} = \frac{1}{(s-1)^2}\begin{bmatrix}
+    s-1 & 0\\-1 & s-1
+\end{bmatrix}$
 
+Now just matrix multiply:
+\begin{align*}
+    G(s) &= \frac{1}{(s-1)^2}\begin{pmatrix}
+        1 & 2\end{pmatrix} 
+        \begin{bmatrix}
+        s-1 & 0\\-1 & s-1
+        \end{bmatrix} \begin{pmatrix}
+        1\\0
+        \end{pmatrix}\\
+        &= \frac{1}{(s-1)^2}\begin{pmatrix}
+            s-3 & 2s-2
+        \end{pmatrix} \begin{pmatrix}
+            1\\0
+        \end{pmatrix}\\
+        &= \frac{s-3}{(s-1)^2}
+\end{align*}
 
 
 
@@ -154,6 +188,29 @@ G(s) = \frac{s^3}{s^3 + 3s^2 + 2s + 1}
 $$
 \soln
 
+First we need to long divide:
+$1 + \frac{-3s^2 -2s -1}{s^3 + 3s^2 + 2s + 1}$.
+Then we have controller canonical form:
+$b_2=-3, b_1=-2, b_0=-1$, and $a_2 = 3, a_1 = 2, a_0 = 1$.
+So we have:
+\begin{align}
+    \dot{x} &= \begin{bmatrix}
+        0 & 1 & 0\\
+        0 & 0 & 1\\
+        1 & 2 & 3
+    \end{bmatrix} x + \begin{pmatrix}
+        0\\0\\1
+    \end{pmatrix}u \\
+    y &= \begin{pmatrix}
+        -1 & -2 & -3
+    \end{pmatrix}x + u
+\end{align}
 
+\begin{figure}[h] 
+    \centering
+    \includegraphics[width=0.55 \linewidth]{11-08-realization.png}
+    \caption{Realization of problem 8}
+    \label{fig:}
+\end{figure}
 
 \end{document}
