@@ -331,6 +331,24 @@ Is the following system controllable? Observable?
 
 \soln
 
+For controllability, we build the controllability matrix.
+$C = \begin{bmatrix}
+    B & AB
+\end{bmatrix}$
+$AB = \begin{bmatrix}
+    1 \\ -1
+\end{bmatrix}$, so $C = \begin{bmatrix}
+    0 & 1 \\ 1 & -1
+\end{bmatrix}$
+which is full rank, so it is controllable.
 
+For observability, we build the observability matrix.
+$O = \begin{bmatrix}
+    C \\ CA
+\end{bmatrix}$
+$CA = \begin{bmatrix}
+    0 & 1 \end{bmatrix}$, so $O = \begin{bmatrix}
+    1 & 0 \\ 0 & 1 \end{bmatrix}$
+which is full rank, so it is observable.
 
 \end{document}
