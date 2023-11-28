@@ -12,7 +12,7 @@
 
 \title{Notesheet}
 \author{Elliott Pryor}
-\date{19 October 2022}
+\date{27 Novemember 2023}
 
 \lhead{Elliott Pryor}
 \rhead{Notesheet}
@@ -24,7 +24,6 @@
 Generally: $\dot{x} = f(x,u), y = h(x,u)$, $x \in \reals^n, u \in \reals^m$.\\
 Jacobian Linearization: given $u = u_0, x=x_0$ is a stationary point ($f(x_0, u_0) = 0$),
 then $\dot{x} \approx J_{f,x}x + J_{f,u}u, y \approx J_{h,x}x + J_{h,u}u$ \\
-
 
 \section{Linear Algebra}
 Linear dependence $\exists \alpha_1, \dots \alpha_m$ not all zero, $\alpha_1 x_1 + \dots + \alpha_m x_m = 0$.\\
@@ -64,10 +63,83 @@ $e^{At} = \mathcal{L}^{-1}((sI - A)^{-1})$
     \includegraphics[width=0.9\linewidth]{cayleyhamilton.png}
 \end{center}
 
+\section{Dynamic Behavior}
+Lipschitz condition: $||F(x) - F(y)|| \leq L ||x - y||$, $x,y \in \{\reals^n: ||x-x_0|| \leq r \}, L,r > 0$
+Globally Lipschitz implies $||F(x)|| \leq L ||x||$
 
+Poincare-Bendixon Criterion: Let $M$ be a closed and bounded set such that it contains no equilibrium points, or the Jacobion has eigenvalues with positive real parts.
+Every trajectory starting in $M$ stays in $M$, then it contains a periodic orbit (show $\dot{boundary} \leq 0$).
+
+Lyaponov Stability: $V: D \to \reals$ such that $V(x)\succ 0$, $x \in D \setminus \{0\}$,
+and $\dot{V}(x) = \frac{\partial V}{\partial x} f(x) \preceq 0 (\text{stable}) \prec 0 (\text{asymtotically})$.
+Require $\lim_{||x|| \to \infty} V(x) = \infty$ for global.
+
+LaSalle's theorem: Let $M$ be a closed and bounded set, and let $V: M \to \reals$ be a continuously differentiable function such that $\dot{V}(x) \preceq 0$ for all $x \in M$.
+Let $S = \{x \in M: \dot{V}(x) = 0\}$, then if no solution can stay identically in $S$ (other than trivial soln), the equilibrium is asymptotically stable.
+
+
+Given $\begin{cases}
+    x(t_0) \\ u(t), t \geq t_0
+\end{cases} \to y(t)$, superpositon: 
+$\begin{cases}
+    \alpha x_1(t_0) + \beta x_2(t_0) \\ \alpha u_1(t) + \beta u_2(t), t \geq t_0
+\end{cases} \to \alpha y_1(t) + \beta y_2$
+Discritization $x(k+1) \approx e^{AT}x(k) + (\int_{\sigma = 0} ^T e^{A\sigma}d\sigma) B u(k)$.
+If $A$ is non-singular: $B_d = A^{-1}(A_d - I)B$.
+
+Globally asymptotically stable iff $A$ has all eigenvalues with negative real part.
+BIBO stable same condition, can also linearize and same condition.
+
+Realization (controller):
+$G(x) = c + \frac{b_{n-1}s^{n-1} + \dots b_0}{s^n + a_{n-1}s^{n-1} + \dots + a_0}$,
+$\dot{x} = \begin{bmatrix}
+    0 & 1 & 0 & \dots & 0 \\
+    0 & 0 & 1 & \dots & 0 \\
+    \vdots & \vdots & \vdots & \ddots & \vdots \\
+    -a_0 & -a_1 & -a_2 & \dots & -a_{n-1}
+\end{bmatrix} + \begin{pmatrix}
+    0 \\ 0 \\ \vdots \\ c
+\end{pmatrix}$, $y = \begin{pmatrix}
+    b_0 & b_1 & \dots & b_{n-1}
+\end{pmatrix}x$
+
+\section{Laplace Transform}
+$$\mathcal{L}[f(t)] = F(s) = \int_{0} ^ \infty f(t) e^{-st} dt $$
+$Y(z) = Z(y(k)) = \sum_{k = 0} ^ \infty y(k)z^{-k}$
+
+Unit step: $\mathcal{L}[1] = 1/s$\\
+Unit ramp: $\mathcal{L}[t] = 1/s^2$\\
+Power function: $\mathcal{L}[t^n] = \frac{n!}{s^{n+1}}$\\
+Exponential: $\mathcal{L}[e^{-\alpha t}] = \frac{1}{s + \alpha}$\\
+Sine: $\mathcal{L}[\sin(\omega t)] = \frac{\omega}{s^2 + \omega^2}$\\
+Cosine: $\mathcal{L}[\cos(\omega t)] = \frac{s}{s^2 + \omega^2}$\\
+
+Linearity: $\mathcal{L}[a_1 f_1(t) + a_2 f_2(t)] = a_1 \mathcal{L}[f_1(t)] + a_2 \mathcal{L}[f_2(t)]$\\
+Differentiation: $\mathcal{L}[\frac{d}{dt} f(t)] = sF(s) - f(0)$, or in general
+$\mathcal{L}[\frac{d^n}{dt^n} f(t)] = s^nF(s) - s^{n-1}f(0) - s^{n-2}f'(0) - \dots - s f^{(n-2)}(0) - f^{(n-1)}(0)$\\
+Integration: $\mathcal{L}(\int f(t)dt) = \frac{F(s)}{s} + \frac{\Eval{\int f(t)dt}{t=0}{}}{s}$\\
+Time shift: $\mathcal{L}[f(t-\alpha)] = e^{-\alpha s}F(s)$\\
+Frequency shift: $\mathcal{L}[e^{-\alpha t}f(t)] = F(s + \alpha)$\\
+Time scale: $\mathcal{L}[f(t/\alpha)] = \alpha F (\alpha s)$\\
+Multiplication by time: $\mathcal{L}[tf(t)] = - \frac{d}{ds}F(s)$\\
+
+
+\section{Frequency Domain}
+First order: $G(s) = \frac{\sigma}{s + \sigma} = \frac{1}{\frac{s}{\sigma}+1}$, $1/\sigma:$ time constant\\
+Second order: $G(s) = \frac{\omega_n^2}{s^2 + 2 \sigma \epsilon \omega_n s + \omega_n ^2}$, $\epsilon:$ damping ratio, $\omega_d =\omega_n\sqrt{1 - \epsilon^2}:$ damped frequency, $\omega_n$: natural frequency,
+$t_r \approx \frac{1.8}{\omega_n}:$ rise time, $t_s \approx \frac{4.6}{\omega_d}:$ settling time, $M_p = e^{-\pi \epsilon / \sqrt{1 - \epsilon^2}}:$ overshoot, $t_p = \pi/\omega_d:$ peak time\\
+
+$T(s) = \frac{b(s)}{a(s)} = \frac{b_0 s^m + \dots + b_m}{s^n + a_1s^{n-1} + a_2 s^{n-2} + \dots + a_n}$, system is asymptotically stable iff $a(s)$ has all roots in LHP.\\
+The Routh array is.
+If zero in row, but remaining elements are non-zero. Replace with $\epsilon > 0$ and limit $\epsilon \to 0$.
+If entire row $s^i$ is zero, and $s^{i+1}$ has coeff $\alpha_1, \alpha_2, \dots$, define aux $a^i = \alpha_1 s^{i=1} + \alpha_2 s^{i-1} + \alpha_3 s^{i-3} + \dots$,
+take its derivative and use coefficients to fill in row.\\
+\begin{center}
+    \includegraphics[width=0.99 \linewidth]{routh.png}
+\end{center}
 \section{Other}
 
-Capacitor - $i = C \frac{dv}{dt}$, Inductor: $v = L \frac{di}{dt}$, Friction $F = -k v$
+Capacitor - $i = C \frac{dv}{dt}$ (state=Voltage), Inductor: $v = L \frac{di}{dt}$ (state=Current), Friction $F = -k v$
 
 \begin{center}
     \includegraphics[width=0.99 \linewidth]{10-09-p1.png}
