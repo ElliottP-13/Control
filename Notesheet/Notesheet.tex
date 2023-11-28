@@ -137,6 +137,45 @@ take its derivative and use coefficients to fill in row.\\
 \begin{center}
     \includegraphics[width=0.99 \linewidth]{routh.png}
 \end{center}
+
+$Y(s) = Y_1(s) + Y_2(s) = G_1(s) U(s) + G_2(s)R(s)$,\\
+$U(s) = R(s) - G_1(s)U(s) \implies (1 + G_1(s))U(s) = R(s) \implies U(s) = \frac{R(s)}{1 + G_1(s)}$ \\
+So, $Y(s) = \left[\frac{G_1(s)}{1 + G_1(s)} + G_2(s)\right] R(s)$
+\begin{center}
+    \includegraphics[width=0.99 \linewidth]{transfer.png}
+\end{center}
+
+Let $L(s) = \frac{L_0(s)}{s^n}$ then it is type $n$ system. Type 0 tracks $r(t) = 1(t) \to \frac{1}{1 + K_p}$,
+Type 1 tracks $r(t) = t1(t) \to \frac{1}{K_v}$, and Type 2 tracks $r(t) = \frac{t^2}{2}1(t) \to \frac{1}{K_a}$.
+
+PID is $u(t) = k_p (e + \frac{1}{T_1}\int_0^t e(\tau) d\tau + T_D \frac{de}{dt}) \to C(s) = U(s)/E(s) = k_p + \frac{k_p}{T_Is} + k_p T_D s$.
+
+Nyquist: Contour of $L(s)$ as $s$ traverses the RHP. Circle -1 is bad.
+gain margin $g_m$ the smalest factor $L$ can be increased before circling -1.
+Phase margin $\phi_m$ the largest phase shift $L$ can have before circling -1.
+Stability margin $s_m$, shortest distance from the Nyquist plot to $-1$.
+
+Bode: plot $\lg \omega$ vs $20 \lg |G(j\omega)|$. $\omega_{pc}$ is where phase cross 180,
+$\omega_{gc}$ is where gain cross 0. $g_m = 1/|G(j\omega_{gc})|$, $\phi_m = 180 + \angle G(j\omega_{pc})$.
+
+Lead compensator: $C(s) = \frac{Ts + 1}{\alpha T s + 1}$, $\phi_{max} = \arcsin \frac{1 - \alpha}{1 + \alpha}$, $\omega_{max} = \frac{1}{T\sqrt{\alpha}}$.
+Choose $\omega_{max} = \omega_{gc}$, and $\alpha$ so $\phi_{max} \leq 60\degree$
+
+\section{Time Domain}
+controllability: $(A,B)$ is controllable if $C = \begin{bmatrix}
+    B & AB & \dots & A^{n-1}B
+\end{bmatrix}$ has full row rank.\\
+Observability: $(A,C)$ is observable if $O = \begin{bmatrix}
+    C \\ CA \\ \vdots \\ CA^{n-1}
+\end{bmatrix}$ has full column rank.\\
+
+Pole placement: Compute $C$, and desired $\bar{C}$ (controller realization, negative of desired pole in last row).
+$T = \bar{C}C^{-1}$. Compute desired characteristic polynomial: $\Delta(s) = s^n + \bar{a_n}s^{n-1} + \dots + \bar{a_1}$,
+then $\bar{F} = \begin{bmatrix}
+    \bar{a_1} - a_1 & \dots & \bar{a_n} - a_n \\
+\end{bmatrix}$ (from $A$), and finally $F = \bar{F}T$
+
+LQR: $J = \int_0^\infty (x^T Q x + u^T R u) dt$, $Q \succ 0, R \succ 0$. $u = -R^{-1}B^T Px$, $P$ comes from Riccati: $A^T P + PA + Q - PBR^{-1}B^TP = 0$
 \section{Other}
 
 Capacitor - $i = C \frac{dv}{dt}$ (state=Voltage), Inductor: $v = L \frac{di}{dt}$ (state=Current), Friction $F = -k v$
