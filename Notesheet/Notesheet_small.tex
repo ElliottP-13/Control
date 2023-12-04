@@ -81,7 +81,8 @@ Time shift: $\mathcal{L}[f(t-\alpha)] = e^{-\alpha s}F(s)$\\
 Frequency shift: $\mathcal{L}[e^{-\alpha t}f(t)] = F(s + \alpha)$\\
 Time scale: $\mathcal{L}[f(t/\alpha)] = \alpha F (\alpha s)$\\
 Multiplication by time: $\mathcal{L}[tf(t)] = - \frac{d}{ds}F(s)$\\
-
+Initial value: $f(0) = \lim_{s\to \infty}sF(s)$\\
+Final Value: $f(\infty) = \lim_{s\to 0}s F(s)$
 
 \section{Frequency Domain}
 First order: $G(s) = \frac{\sigma}{s + \sigma} = \frac{1}{\frac{s}{\sigma}+1}$, $1/\sigma:$ time constant\\
@@ -109,8 +110,9 @@ So, $Y(s) = \left[\frac{G_1(s)}{1 + G_1(s)} + G_2(s)\right] R(s)$
     \includegraphics[width=0.99 \linewidth]{transfer.png}
 \end{center}
 
-Let $L(s) = \frac{L_0(s)}{s^n}$ then it is type $n$ system. Type 0 tracks $r(t) = 1(t) \to \frac{1}{1 + K_p}$,
+Tracking: Let $L(s) = \frac{L_0(s)}{s^n}$ then it is type $n$ system. Type 0 tracks $r(t) = 1(t) \to \frac{1}{1 + K_p}$,
 Type 1 tracks $r(t) = t1(t) \to \frac{1}{K_v}$, and Type 2 tracks $r(t) = \frac{t^2}{2}1(t) \to \frac{1}{K_a}$.
+$K = L_0(0)$
 
 PID is $u(t) = k_p (e + \frac{1}{T_1}\int_0^t e(\tau) d\tau + T_D \frac{de}{dt}) \to C(s) = U(s)/E(s) = k_p + \frac{k_p}{T_Is} + k_p T_D s$.
 
