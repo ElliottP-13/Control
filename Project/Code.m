@@ -32,14 +32,38 @@ err = abs(mag - sqrt(2)/2);
 bandwidth = wout(idx)  % bandwidth is omega that comes closest to sqrt(2)/2
 
 %% Problem 2
-G = zpk([], [0,-5, -250],1)
-K = 200;  % K > 100 for steady state tracking error
+clear all;
+close all;
+G = zpk([], [0,-5, -250],5*250)
+K = 101;  % K > 100 for steady state tracking error
 
 sys = K*G;
 figure
 bode(sys); margin(sys)
 [Gm, Pm, Wcg, Wcp] = margin(sys);
 Pm  % this is > 40, so we are just done??
+
+new_gc = 5;
+[mag, phase, wout] = bode(sys, new_gc);
+mag_db = 20 * log10(mag);
+
+a = 15;
+lower_db_enough = 20 * log10(1/a) < -mag_db
+
+T = 6;
+
+pt1_gc = 0.1 * new_gc
+one_on_T = 1/T
+
+Tgc = T * new_gc
+
+C = tf([T, 1], [a*T, 1])
+
+sys2 = K*C*G;
+figure
+bode(sys); margin(sys)
+hold on
+bode(sys2); margin(sys2)
 %% Problem 3
 % do the matrix multiplication
 A = [2 1;-1 1];

@@ -97,18 +97,31 @@ $$
     \item So first we need to find gain to make the steady state error within range.
     It is a type 1 system with $L_0 = \frac{1250 K}{(s + 5)(s + 250)}$, so the steady state
     tracking error of unit ramp is $1/L_0(0) = 1/K$, thus $K > 100$.
-    We pick $K = 200$.
-    
-    We plot the Bode of $KG(s)$ and discover a gain margin of 64dB and phase margin of 88.1\degree at $\omega_{gc} = 0.16$ rad/s.
-    This already has enough phase margin, so we are done, and we don't need a compensator.
+    We pick $K = 101$.
 
-    \item See figure \ref{fig:p2_bode_1} 
-    \begin{figure}[h]
+    \begin{figure}[h!]
         \centering
         \includegraphics[width=0.55 \linewidth]{p2_bode_1.png}
-        \caption{Problem 2: Bode plot of $G(s)$ with $K=200$}
+        \caption{Problem 2: Bode plot of $G(s)$ with $K=101$}
         \label{fig:p2_bode_1}
     \end{figure}
+    
+    We see it has a phase margin of 7.66\degree (Figure \ref{fig:p2_bode_1}). So we need to add at least 32.34\degree of phase margin.
+    We see in the Bode plot that the phase is approximately -136 at 5rad/s.
+    So we want to shift the gain crossover frequency to $\omega_{gc} = 5$rad/s.
+    The magnitude curve needs to be lowered by 23dB at that frequency.
+    So we choose $\alpha = 15$ so that $20 \lg 1/\alpha = -23.5 < -23$,
+    then, to guarantee that $T \omega_{gc} \gg 1$ and $1/T < 0.1 \omega_{gc}$,
+    we choose $T = 6$, which has satisfies $1/T = 1/6 < 0.5$ and $T * \omega_{gc} = 30 \gg 1$.
+
+    \item See figure \ref{fig:p2_bode_2} 
+    \begin{figure}[h!]
+        \centering
+        \includegraphics[width=0.75 \linewidth]{p2_bode_2.png}
+        \caption{Problem 2: Bode plot of $KC(s)G(s)$}
+        \label{fig:p2_bode_2}
+    \end{figure}
+    
 \end{enumerate}
 
 
